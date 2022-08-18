@@ -8,41 +8,12 @@ if (!MONGODB_URI) {
     throw new Error('Define the MONGODB_URI environmental variable');
 }
 
-// check the MongoDB DB
-if (!MONGODB_DB) {
-    throw new Error('Define the MONGODB_DB environmental variable');
-}
-
-var cachedClient = null;
-var cachedDb = null;
-
 export async function connectToDatabase() {
     // check the cached.
-    if (cachedClient && cachedDb) {
-        // load from cache
-        return {
-            client: cachedClient,
-            db: cachedDb,
-        };
-    }
-
-    // set the connection options
-    const opts = {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    };
-
-    // Connect to cluster
-    let client = new MongoClient(MONGODB_URI, opts);
-    await client.connect();
-    let db = client.db(MONGODB_DB);
-
-    // set cache
-    cachedClient = client;
-    cachedDb = db;
-
-    return {
-        client: cachedClient,
-        db: cachedDb,
-    };
+    mongoose.connect(process.env.MONGODB_URI, function(err) {
+        if (err) {
+          console.error(err);
+        }
+        console.log('connected.... unless you see an error the line before this!');
+    });
 }

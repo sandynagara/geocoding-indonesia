@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const mongoosastic = require('mongoosastic')
 import { Client } from '@elastic/elasticsearch';
 
-const JenisKegiatan = new mongoose.Schema({
+const Alamat = new mongoose.Schema({
     kegiatan: { type: String, es_indexed: true },
     "jenis kegiatan": String,
     "sub kegiatan": String,
     keterangan:String
-},{ collection: 'jenis_kegiatan' })
+},{ collection: 'alamat' })
 
 const client = new Client({
     node:"http://ppids-ugm.com:9200",
@@ -18,6 +18,6 @@ JenisKegiatan.plugin(mongoosastic, {
     esClient: client 
 })
 
-module.exports = mongoose.models["bidang_tanah"] || mongoose.model("jenis_kegiatan", JenisKegiatan).synchronize();
+module.exports = mongoose.models["alamat"] || mongoose.model("alamat", Alamat).synchronize();
 
 
