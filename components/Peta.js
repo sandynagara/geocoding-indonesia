@@ -9,7 +9,7 @@ import GeoJSON from "ol/format/GeoJSON"
 import TileWMS from 'ol/source/TileWMS';
 import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
 
-const Peta = ({ zoom =19, dataInput = false}) => {
+const Peta = ({ zoom =16, dataInput = false}) => {
   const mapRef = useRef();
   const [map, setMap] = useState(null);
   const [center, setCenter] = useState([110.41019027614477, -6.991410100761829]);
@@ -19,7 +19,8 @@ const Peta = ({ zoom =19, dataInput = false}) => {
       view: new ol.View({ zoom, center,projection: "EPSG:4326" }),
       layers: [new OLTileLayer({
         source: new XYZ({
-          url: 'http://mt1.google.com/vt/lyrs=s&hl=pl&&x={x}&y={y}&z={z}'
+          //url: 'http://mt1.google.com/vt/lyrs=s&hl=pl&&x={x}&y={y}&z={z}'
+          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
         })
       }),new OLTileLayer({
         source: new TileWMS({

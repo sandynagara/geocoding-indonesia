@@ -5,6 +5,9 @@ import Autosuggest from 'react-autosuggest';
 import Sidebar from '../components/Sidebar/Sidebar';
 import Info from '../components/info/Info';
 
+
+const server = process.env.SERVER;
+
 export default function Home() {
      
     const [value, setValue] = useState("")
@@ -12,7 +15,7 @@ export default function Home() {
     const [dataInput, setDataInput] = useState(false)
 
     var getDataAlamat = async (newValue) => {
-      var url = `http://localhost:3000/api/geocoding/${newValue}`
+      var url = `${server}/api/geocoding/${newValue}`
       fetch(url,{
           method:"GET",
       }).then(res=>res.json()).then(res=>{
