@@ -2,6 +2,8 @@ import React,{useState,useEffect} from 'react'
 import Peta from "../components/Peta"
 import InputAlamat from '../components/Toolbar/InputAlamat'
 import Autosuggest from 'react-autosuggest';
+import Sidebar from '../components/Sidebar/Sidebar';
+import Info from '../components/info/Info';
 
 export default function Home() {
      
@@ -58,7 +60,9 @@ export default function Home() {
                 inputProps={inputProps}
             />
             </div>
+            {/* <Sidebar/> */}
             <Peta dataInput={dataInput}/>
+            <Info data={value}/>
         </div>
     )
 }

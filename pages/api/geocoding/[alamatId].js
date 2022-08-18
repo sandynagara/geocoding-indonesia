@@ -11,10 +11,14 @@ export default async function data(req, res) {
     })
   
     const result= await client.search({
-      index: 'kecamatan_semarang_selatan_fix_2',
+      index: 'semarangselatan',
       size:5,
       query: {
-        match: { ALAMAT: req.query.alamatId }
+        match: { 
+          ALAMAT: {
+            "query": req.query.alamatId,
+            "fuzziness": "AUTO"
+        }}
       }
     })
   
