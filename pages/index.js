@@ -4,6 +4,7 @@ import InputAlamat from '../components/Toolbar/InputAlamat'
 import Autosuggest from 'react-autosuggest';
 import Sidebar from '../components/Sidebar/Sidebar';
 import Info from '../components/info/Info';
+import Header from '../components/Header/Header';
 
 export default function Home() {
      
@@ -50,6 +51,7 @@ export default function Home() {
 
     return (
         <div>
+            <Header/>
             <div className='p-5 w-[300px] absolute z-10'>
             <Autosuggest
                 suggestions={suggestion}
