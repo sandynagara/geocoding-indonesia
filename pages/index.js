@@ -1,69 +1,41 @@
 import React,{useState,useEffect} from 'react'
+
 import Peta from "../components/Peta"
-import InputAlamat from '../components/Toolbar/InputAlamat'
-import Autosuggest from 'react-autosuggest';
+
 import Sidebar from '../components/Sidebar/Sidebar';
 import Info from '../components/info/Info';
 import Header from '../components/Header/Header';
+import Basemap from '../components/Sidebar/Basemap';
+
+import InputAlamat from '../components/Toolbar/InputAlamat';
+import Welcome from '../components/Sidebar/Welcome';
 
 export default function Home() {
      
     const [value, setValue] = useState("")
-    const [suggestion, setSuggestions] = useState([])
+
     const [dataInput, setDataInput] = useState(false)
 
-    var getDataAlamat = async (newValue) => {
-      var url = `http://localhost:3000/api/geocoding/${newValue}`
-      fetch(url,{
-          method:"GET",
-      }).then(res=>res.json()).then(res=>{
-        if(!res["Hasil"]){
-            return
-        }
-        setSuggestions(res["Data"]["hits"])
-    })
-      .catch(err=>console.log(err))
-    }
+    const [menuSelect, setMenuSelect] = useState({nama:"Home",lebarSidebar:300})
+    const [basemapSelect, setBasemapSelect] = useState("https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}")
 
-    var onSuggestionsFetchRequested = (e) => {
-        getDataAlamat(e.value)
-    }
-    var onSuggestionsClearRequested = (e) => {
-        setSuggestions([])
-    }
-    var getSuggestionValue = (e) => {
-        setDataInput(e._source.geometry)
-        return e._source.ALAMAT;
-    }
-    var renderSuggestion = (e) => {
-        return <div className='text-sm'>{e._source.ALAMAT}</div>
-    }
+ 
 
-    var onChange = (event, { newValue, method }) => {
-        setValue(newValue)
-    }
-
-    const inputProps = {
-        placeholder: 'Cari Alamat',
-        value,
-        onChange: onChange
-    };
+  
 
     return (
         <div>
             <Header/>
-            <div className='p-5 w-[300px] absolute z-10'>
-            <Autosuggest
-                suggestions={suggestion}
-                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps}
-            />
+            <div className='flex'>
+                <Sidebar setMenuSelect={setMenuSelect}/>
+                <Welcome menuSelect={menuSelect["nama"]}/>
+                <Basemap menuSelect={menuSelect["nama"]} basemapSelect={basemapSelect} setBasemapSelect={setBasemapSelect}/>
+                <div className=' mt-5 px-5 w-[300px] absolute z-10 duration-500' style={{marginLeft:`calc(${menuSelect["lebarSidebar"]}px + 88px)`} }>
+                    <InputAlamat setValue={setValue} setDataInput={setDataInput} value={value}/>
+                </div>
             </div>
             {/* <Sidebar/> */}
-            <Peta dataInput={dataInput}/>
+            <Peta dataInput={dataInput} basemapUrl={basemapSelect} menuSelect={menuSelect} setMenuSelect={setMenuSelect} setDataInput={setDataInput} setValue={setValue}/>
             <Info data={value}/>
         </div>
     )

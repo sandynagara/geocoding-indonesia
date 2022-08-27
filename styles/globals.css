@@ -28,14 +28,15 @@ body {
 }
 
 .react-autosuggest__input {
-  width: 500px;
+  width: 400px;
   height: 30px;
   padding: 20px 20px;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
   font-size: 16px;
-  border: 1px solid #aaa;
-  border-radius: 4px;
+  border-width: 3px 0px 3px 3px;
+  border-color:  #004A74;
+  border-radius: 0px;
 }
 
 .react-autosuggest__input--focused {
@@ -55,7 +56,7 @@ body {
   display: block;
   position: absolute;
   
-  width: 500px;
+  width: 433px;
   border: 1px solid #aaa;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
@@ -79,4 +80,24 @@ body {
 
 .react-autosuggest__suggestion--highlighted {
   background-color: #ddd;
+}
+
+
+.sidebar::-webkit-scrollbar,.isi-laporan::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+.sidebar::-webkit-scrollbar-track,.isi-laporan::-webkit-scrollbar-track{
+  background: #bdbdbd;
+}
+
+/* Handle */
+.sidebar::-webkit-scrollbar-thumb,.isi-laporan::-webkit-scrollbar-thumb {
+  background: #005f96;
+}
+
+/* Handle on hover */
+.sidebar::-webkit-scrollbar-thumb:hover,.isi-laporan::-webkit-scrollbar-thumb:hover{
+  background: #004A74;
 }
