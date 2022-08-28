@@ -52,7 +52,7 @@ const inputProps = {
     onChange: onChange
 };
 
-  return ( <div className='flex'>
+  return ( <div className='flex w-screen items-center'>
       <Autosuggest
           suggestions={suggestion}
           onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -60,8 +60,9 @@ const inputProps = {
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
+          
       />
-      <div className='pr-2 ml-[-2px] h-[48px] mt-[-1px] border-primary border-r-4 border-y-4 bg-white flex items-center justify-center'>  
+      <div className='pr-2 ml-[-2px] h-[46px]  border-primary border-r-[3px] border-y-[3px] bg-white flex items-center justify-center'>  
       {loading && <Image src={LoadingLogo} width={25}/>}
       {value !== "" ? <AiOutlineClose size={25} color="red" onClick={()=>setValue("")} className="hover:cursor-pointer"/>: <AiOutlineSearch size={25}/>}
       

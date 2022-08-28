@@ -1,42 +1,60 @@
-import React,{useState,useEffect} from 'react'
-
+import React,{useState} from 'react'
+import { useMediaQuery } from 'react-responsive'
 import Peta from "../components/Peta"
-
-import Sidebar from '../components/Sidebar/Sidebar';
+import Head from 'next/head'
 import Info from '../components/info/Info';
 import Header from '../components/Header/Header';
 import Basemap from '../components/Sidebar/Basemap';
-
+import logo from "../components/images/logoUGM.png"
 import InputAlamat from '../components/Toolbar/InputAlamat';
 import Welcome from '../components/Sidebar/Welcome';
+import Sidebar from '../components/Sidebar/Sidebar';
+import BottomBar from '../components/BottomBar/BottomBar';
+import useResponsive from '../components/utils/useResponsice';
+import BasemapBottom from '../components/BottomBar/BasemapBottom';
+import WelcomeBottom from '../components/BottomBar/WelcomeBottom';
+import Informasi from '../components/Sidebar/Informasi';
+
 
 export default function Home() {
-     
     const [value, setValue] = useState("")
-
     const [dataInput, setDataInput] = useState(false)
-
     const [menuSelect, setMenuSelect] = useState({nama:"Home",lebarSidebar:300})
     const [basemapSelect, setBasemapSelect] = useState("https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}")
 
- 
-
-  
+    const { isTablet } = useResponsive();
 
     return (
         <div>
+             <Head>
+                <title>Uji Implementasi SNI 9037:2021 tentang Alamat</title>
+                <link rel="shortcut icon" href={logo}/>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
             <Header/>
             <div className='flex'>
-                <Sidebar setMenuSelect={setMenuSelect}/>
-                <Welcome menuSelect={menuSelect["nama"]}/>
-                <Basemap menuSelect={menuSelect["nama"]} basemapSelect={basemapSelect} setBasemapSelect={setBasemapSelect}/>
-                <div className=' mt-5 px-5 w-[300px] absolute z-10 duration-500' style={{marginLeft:`calc(${menuSelect["lebarSidebar"]}px + 88px)`} }>
+                {!isTablet && <Sidebar setMenuSelect={setMenuSelect}/>}
+                {!isTablet && <Welcome menuSelect={menuSelect["nama"]}/>}
+                {!isTablet && <Informasi menuSelect={menuSelect["nama"]}/>}
+                {!isTablet && <Basemap menuSelect={menuSelect["nama"]} basemapSelect={basemapSelect} setBasemapSelect={setBasemapSelect}/>}
+                {!isTablet ? 
+                 <div className=' mt-5 px-5  absolute z-10 duration-500' style={{marginLeft:`calc(${menuSelect["lebarSidebar"]}px + 88px)`} }>
+                 <InputAlamat setValue={setValue} setDataInput={setDataInput} value={value}/>
+                </div>
+                    :
+                <div className='p-1 w-screen absolute z-10 duration-500' >
                     <InputAlamat setValue={setValue} setDataInput={setDataInput} value={value}/>
                 </div>
+                }
+                
             </div>
-            {/* <Sidebar/> */}
+        
+
             <Peta dataInput={dataInput} basemapUrl={basemapSelect} menuSelect={menuSelect} setMenuSelect={setMenuSelect} setDataInput={setDataInput} setValue={setValue}/>
-            <Info data={value}/>
+            {!isTablet && <Info data={value}/>}
+            {isTablet && <BottomBar setMenuSelect={setMenuSelect}/>}
+            {isTablet && <WelcomeBottom menuSelect={menuSelect["nama"]} setMenuSelect={setMenuSelect}/>}
+            {isTablet && <BasemapBottom  menuSelect={menuSelect["nama"]} setMenuSelect={setMenuSelect} basemapSelect={basemapSelect} setBasemapSelect={setBasemapSelect}/>}
         </div>
     )
 }

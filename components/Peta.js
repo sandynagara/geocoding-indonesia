@@ -14,27 +14,31 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
   const [map, setMap] = useState(null);
   const [center, setCenter] = useState([110.41019027614477, -6.991410100761829]);
   
-  var basemapLayer= new OLTileLayer({
+  const basemapLayer= new OLTileLayer({
     properties:"Basemap",
     source: new XYZ({
       
       url: basemapUrl
     })
   })
+
+  const view = new ol.View({ zoom, center,projection: "EPSG:4326" })
+
+  const sourceWMS = new TileWMS({
+    url: 'https://ppids-ugm.com/geoserver/wms',
+    params: {'LAYERS': 'geocoding:semarang', 'TILED': true},
+    serverType: 'geoserver',
+    // Countries have transparency, so do not fade tiles:
+    transition: 0,
+  })
   // on component mount
   useEffect(() => {
     let options = {
-      view: new ol.View({ zoom, center,projection: "EPSG:4326" }),
+      view: view,
       layers: [basemapLayer,
         new OLTileLayer({
         zIndex:100,
-        source: new TileWMS({
-          url: 'https://ppids-ugm.com/geoserver/wms',
-          params: {'LAYERS': 'geocoding:semarang', 'TILED': true},
-          serverType: 'geoserver',
-          // Countries have transparency, so do not fade tiles:
-          transition: 0,
-        }),
+        source: sourceWMS,
       }),]
     };
     let mapObject = new ol.Map(options);
@@ -118,9 +122,34 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
     map.addLayer(geojsonData)
   }
 
+  var GetFeatureInfo = () => {
+    if (!map) return;
+    map.on('singleclick', function (evt) {
+      const viewResolution = /** @type {number} */ (view.getResolution());
+      const url = sourceWMS.getFeatureInfoUrl(
+        evt.coordinate,
+        viewResolution,
+        'EPSG:4326',
+        {'INFO_FORMAT': 'application/json'}
+      );
+     
+      if (url) {
+        fetch(url)
+          .then((response) => response.json())
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((err)=>{
+            console.log(err)
+          });
+      }
+    });
+  }
+
   return (
       <div ref={mapRef} className="h-screen w-screen fixed ol-map">
         <GeojsonInput/>
+        <GetFeatureInfo/>
       </div>
   )
 }
