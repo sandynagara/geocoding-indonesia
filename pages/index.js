@@ -14,12 +14,13 @@ import useResponsive from '../components/utils/useResponsice';
 import BasemapBottom from '../components/BottomBar/BasemapBottom';
 import WelcomeBottom from '../components/BottomBar/WelcomeBottom';
 import Informasi from '../components/Sidebar/Informasi';
-
+import InformasiBottom from '../components/BottomBar/InfomasiBottom';
 
 export default function Home() {
     const [value, setValue] = useState("")
     const [dataInput, setDataInput] = useState(false)
-    const [menuSelect, setMenuSelect] = useState({nama:"Home",lebarSidebar:300})
+    const [informasiPersil, setInformasiPersil] = useState(false)
+    const [menuSelect, setMenuSelect] = useState({nama:"Home",lebarSidebar:250})
     const [basemapSelect, setBasemapSelect] = useState("https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}")
 
     const { isTablet } = useResponsive();
@@ -33,13 +34,13 @@ export default function Home() {
             </Head>
             <Header/>
             <div className='flex'>
-                {!isTablet && <Sidebar setMenuSelect={setMenuSelect}/>}
+                {!isTablet && <Sidebar setMenuSelect={setMenuSelect} menuSelect={menuSelect["nama"]}/>}
                 {!isTablet && <Welcome menuSelect={menuSelect["nama"]}/>}
-                {!isTablet && <Informasi menuSelect={menuSelect["nama"]}/>}
+                {!isTablet && <Informasi menuSelect={menuSelect["nama"]} informasiPersil={informasiPersil}/>}
                 {!isTablet && <Basemap menuSelect={menuSelect["nama"]} basemapSelect={basemapSelect} setBasemapSelect={setBasemapSelect}/>}
                 {!isTablet ? 
-                 <div className=' mt-5 px-5  absolute z-10 duration-500' style={{marginLeft:`calc(${menuSelect["lebarSidebar"]}px + 88px)`} }>
-                 <InputAlamat setValue={setValue} setDataInput={setDataInput} value={value}/>
+                <div className=' mt-3 px-5  absolute z-10 duration-500' style={{marginLeft:`calc(${menuSelect["lebarSidebar"]}px + 88px)`} }>
+                    <InputAlamat setValue={setValue} setDataInput={setDataInput} value={value}/>
                 </div>
                     :
                 <div className='p-1 w-screen absolute z-10 duration-500' >
@@ -50,10 +51,11 @@ export default function Home() {
             </div>
         
 
-            <Peta dataInput={dataInput} basemapUrl={basemapSelect} menuSelect={menuSelect} setMenuSelect={setMenuSelect} setDataInput={setDataInput} setValue={setValue}/>
+            <Peta dataInput={dataInput} basemapUrl={basemapSelect} menuSelect={menuSelect} setMenuSelect={setMenuSelect} setDataInput={setDataInput} setValue={setValue} setInformasiPersil={setInformasiPersil}/>
             {!isTablet && <Info data={value}/>}
             {isTablet && <BottomBar setMenuSelect={setMenuSelect}/>}
             {isTablet && <WelcomeBottom menuSelect={menuSelect["nama"]} setMenuSelect={setMenuSelect}/>}
+            {isTablet && <InformasiBottom menuSelect={menuSelect["nama"]} setMenuSelect={setMenuSelect}  informasiPersil={informasiPersil}/>}
             {isTablet && <BasemapBottom  menuSelect={menuSelect["nama"]} setMenuSelect={setMenuSelect} basemapSelect={basemapSelect} setBasemapSelect={setBasemapSelect}/>}
         </div>
     )

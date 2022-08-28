@@ -6,21 +6,22 @@ import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
 import GeoJSON from "ol/format/GeoJSON"
 import TileWMS from 'ol/source/TileWMS';
-import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
+import { Fill, Stroke, Style} from 'ol/style';
 
 
-const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDataInput,setMenuSelect}) => {
+const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDataInput,setMenuSelect,setInformasiPersil}) => {
   const mapRef = useRef();
   const [map, setMap] = useState(null);
-  const [center, setCenter] = useState([110.41019027614477, -6.991410100761829]);
+  const [clickCoordinate, setClickCoordinate] = useState();
   
   const basemapLayer= new OLTileLayer({
     properties:"Basemap",
     source: new XYZ({
-      
       url: basemapUrl
     })
   })
+
+  var center = [110.41019027614477, -6.991410100761829]
 
   const view = new ol.View({ zoom, center,projection: "EPSG:4326" })
 
@@ -53,6 +54,7 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
       setMenuSelect({nama:"reset",lebarSidebar:0})
       map.getView().setCenter(center)
       map.getView().setZoom(19);
+      setInformasiPersil(false)
       setValue("")
       setDataInput(false)
       try{
@@ -85,10 +87,9 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
     map.addLayer(basemapLayer)
   }, [basemapUrl])
   
-
-  var GeojsonInput = () => {
+  useEffect(() => {
     if (!map || !dataInput) return;
-
+    console.log(dataInput)
     try{
       map.getLayers().forEach(layer => {
         if (layer.values_.title == 'testing'){
@@ -100,8 +101,10 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
     }
    
 
-    map.getView().setCenter(dataInput["coordinates"][0][0])
-    map.getView().setZoom(19);
+    if(dataInput["type"]=="Polygon"){
+      map.getView().setCenter(dataInput["coordinates"][0][0])
+      map.getView().setZoom(19);
+    }
 
     var geojsonData = new VectorLayer({
       zIndex:99,
@@ -120,14 +123,13 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
       }),
     })
     map.addLayer(geojsonData)
-  }
-
-  var GetFeatureInfo = () => {
+  }, [dataInput])
+  
+  useEffect(() => {
     if (!map) return;
-    map.on('singleclick', function (evt) {
       const viewResolution = /** @type {number} */ (view.getResolution());
       const url = sourceWMS.getFeatureInfoUrl(
-        evt.coordinate,
+        clickCoordinate,
         viewResolution,
         'EPSG:4326',
         {'INFO_FORMAT': 'application/json'}
@@ -138,17 +140,26 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
           .then((response) => response.json())
           .then((res) => {
             console.log(res)
+            if(res["features"].length == 0) return
+            setDataInput(res["features"][0]["geometry"])
+            setInformasiPersil(res["features"][0]["properties"])
           })
           .catch((err)=>{
             console.log(err)
           });
       }
-    });
+  }, [clickCoordinate])
+  
+
+  var GetFeatureInfo = () => {
+    if (!map) return;
+    map.on('singleclick', function (evt) {
+      setClickCoordinate(evt.coordinate)
+    })
   }
 
   return (
       <div ref={mapRef} className="h-screen w-screen fixed ol-map">
-        <GeojsonInput/>
         <GetFeatureInfo/>
       </div>
   )

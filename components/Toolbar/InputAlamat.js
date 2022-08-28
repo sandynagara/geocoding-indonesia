@@ -21,6 +21,7 @@ function InputAlamat({setValue,setDataInput,value}) {
       }
       setLoading(false)
       setSuggestions(res["Data"]["hits"])
+      console.log(res["Data"]["hits"])
   })
     .catch(err=>{
       setLoading(false)
