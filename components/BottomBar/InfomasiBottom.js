@@ -1,5 +1,5 @@
 import React from 'react'
-import {RiArrowDownSLine} from "react-icons/Ri"
+import {RiArrowDownSLine} from "react-icons/ri"
 
 function InfomasiBottom({menuSelect,setMenuSelect,informasiPersil}) {
 

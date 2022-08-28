@@ -6,7 +6,7 @@ import EsriToPo from '../images/Basemap/EsriToPo.jpg'
 import StadiaDark from '../images/Basemap/StadiaDark.jpg'
 import GoogleMaps from '../images/Basemap/GoogleMaps.jpg'
 import GoogleStreet from '../images/Basemap/GoogleStreet.jpg'
-import {RiArrowDownSLine} from "react-icons/Ri"
+import {RiArrowDownSLine} from "react-icons/ri"
 
 const daftarBasemap = [
     {
@@ -44,13 +44,13 @@ const daftarBasemap = [
 function BasemapBottom({basemapSelect,setBasemapSelect,menuSelect,setMenuSelect}) {
   return (
     <div className='z-10 w-full fixed bottom-0  bg-white overflow-scroll  duration-500' style={menuSelect == "Basemap" ? {marginBottom:"0px"}: {marginBottom:"-1200px"}}>
-        <div className='flex justify-between  items-center p-2 font-medium bg-white text-black'>
+        <div className='flex justify-between z-990 items-center p-2 font-medium bg-white text-black'>
             Basemap
             <RiArrowDownSLine color='gray' size={23} className="cursor-pointer" onClick={()=>{
                 setMenuSelect({nama:"Reset",lebarSidebar:0})
             }}/>
         </div>
-        <div className='grid  grid-cols-2'>
+        <div className='grid z-0 grid-cols-2'>
             {daftarBasemap.map((data,index)=>{
                 return <div 
                 key={index}

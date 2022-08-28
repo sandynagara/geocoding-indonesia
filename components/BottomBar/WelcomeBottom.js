@@ -1,5 +1,5 @@
 import React from 'react'
-import {RiArrowDownSLine} from "react-icons/Ri"
+import {RiArrowDownSLine} from "react-icons/ri"
 
 function WelcomeBottom({menuSelect,setMenuSelect}) {
   return (
