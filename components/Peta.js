@@ -8,7 +8,7 @@ import GeoJSON from "ol/format/GeoJSON"
 import TileWMS from 'ol/source/TileWMS';
 import { Fill, Stroke, Style} from 'ol/style';
 
-const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDataInput,setMenuSelect,setInformasiPersil}) => {
+const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setDataInput,setMenuSelect,setInformasiPersil}) => {
   const mapRef = useRef();
   const [map, setMap] = useState(null);
   const [clickCoordinate, setClickCoordinate] = useState();
@@ -63,7 +63,7 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
     if(menuSelect["nama"] == "Reset View"){
       setMenuSelect({nama:"reset",lebarSidebar:0})
       map.getView().setCenter(center)
-      map.getView().setZoom(19);
+      map.getView().setZoom(13);
       setInformasiPersil(false)
       setValue("")
       setDataInput(false)
@@ -169,7 +169,7 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
   }
 
   return (
-      <div ref={mapRef} className="h-screen w-screen fixed ol-map">
+      <div ref={mapRef} className="h-full w-screen flex flex-grow relative ol-map">
         <GetFeatureInfo/>
       </div>
   )

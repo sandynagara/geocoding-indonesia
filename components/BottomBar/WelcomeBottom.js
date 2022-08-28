@@ -3,7 +3,7 @@ import {RiArrowDownSLine} from "react-icons/ri"
 
 function WelcomeBottom({menuSelect,setMenuSelect}) {
   return (
-    <div className='z-10 px-2 py-3 fixed bottom-0  bg-white overflow-scroll  duration-500' style={menuSelect == "Home" ? {marginBottom:"0px"}: {marginBottom:"-1200px"}}>
+    <div className='z-10 px-2 py-3 fixed bottom-0  bg-white overflow-scroll h-full  duration-500' style={menuSelect == "Home" ? {marginBottom:"0px"}: {marginBottom:"-1200px"}}>
         <div className="font-semibold flex justify-between">
           Selamat Datang
           <RiArrowDownSLine color='gray' size={23} className="cursor-pointer" onClick={()=>{
