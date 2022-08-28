@@ -4,15 +4,33 @@ import OLTileLayer from "ol/layer/Tile";
 import XYZ from 'ol/source/XYZ';
 import VectorLayer from "ol/layer/Vector";
 import VectorSource from "ol/source/Vector";
-import Polygon from "ol/geom/Polygon"
 import GeoJSON from "ol/format/GeoJSON"
 import TileWMS from 'ol/source/TileWMS';
-import {Circle as CircleStyle, Fill, Stroke, Style} from 'ol/style';
+import { Fill, Stroke, Style} from 'ol/style';
 
-const Peta = ({ zoom =16, dataInput = false}) => {
+const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDataInput,setMenuSelect,setInformasiPersil}) => {
   const mapRef = useRef();
   const [map, setMap] = useState(null);
-  const [center, setCenter] = useState([110.41019027614477, -6.991410100761829]);
+  const [clickCoordinate, setClickCoordinate] = useState();
+  
+  const basemapLayer= new OLTileLayer({
+    properties:"Basemap",
+    source: new XYZ({
+      url: basemapUrl
+    })
+  })
+
+  var center = [110.41019027614477, -6.991410100761829]
+
+  const view = new ol.View({ zoom, center,projection: "EPSG:4326" })
+
+  const sourceWMS = new TileWMS({
+    url: 'https://ppids-ugm.com/geoserver/wms',
+    params: {'LAYERS': 'geocoding:semarang', 'TILED': true},
+    serverType: 'geoserver',
+    // Countries have transparency, so do not fade tiles:
+    transition: 0,
+  })
   // on component mount
   useEffect(() => {
     let options = {
@@ -33,7 +51,6 @@ const Peta = ({ zoom =16, dataInput = false}) => {
       }),],
       controls: [],
       overlays: []
-      
     };
     let mapObject = new ol.Map(options);
     mapObject.setTarget(mapRef.current);
@@ -43,40 +60,64 @@ const Peta = ({ zoom =16, dataInput = false}) => {
   // zoom change handler
   useEffect(() => {
     if (!map) return;
-    map.getView().setZoom(zoom);
-  }, [zoom]);
-  // center change handler
-  useEffect(() => {
-    if (!map) return;
-    map.getView().setCenter(center)
-  }, [center])
-
-  var ClickTes = () => {
-    if (!map) return;
-    map.on('click', function(event) {
-      console.log(event)
-    });
-  }
-
-  var GeojsonInput = () => {
-    if (!map) return;
-    console.log(dataInput)
-    if(!dataInput){
-      return
+    if(menuSelect["nama"] == "Reset View"){
+      setMenuSelect({nama:"reset",lebarSidebar:0})
+      map.getView().setCenter(center)
+      map.getView().setZoom(19);
+      setInformasiPersil(false)
+      setValue("")
+      setDataInput(false)
+      try{
+        map.getLayers().forEach(layer => {
+          if (layer.values_.title == 'testing'){
+            map.removeLayer(layer)
+          }
+        });
+      }catch(err){
+  
+      }
     }
+  }, [menuSelect]);
 
+  useEffect(() => {
+    console.log(basemapUrl)
+    if (!map) return;
     map.getLayers().forEach(layer => {
-      if (layer.values_.title == 'testing'){
+      if (layer && layer.values_.properties == 'Basemap' ){
         map.removeLayer(layer)
       }
     });
+    var basemapLayer= new OLTileLayer({
+      properties:"Basemap",
+      source: new XYZ({
+        
+        url: basemapUrl
+      })
+    })
+    map.addLayer(basemapLayer)
+  }, [basemapUrl])
+  
+  useEffect(() => {
+    if (!map || !dataInput) return;
+    console.log(dataInput)
+    try{
+      map.getLayers().forEach(layer => {
+        if (layer.values_.title == 'testing'){
+          map.removeLayer(layer)
+        }
+      });
+    }catch(err){
 
-    map.getView().setCenter(dataInput["coordinates"][0][0])
-    map.getView().setZoom(19);
+    }
+   
 
-    console.log(dataInput["coordinates"])
-    var plygon = new Polygon(dataInput["coordinates"])
+    if(dataInput["type"]=="Polygon"){
+      map.getView().setCenter(dataInput["coordinates"][0][0])
+      map.getView().setZoom(19);
+    }
+
     var geojsonData = new VectorLayer({
+      zIndex:99,
       title:"testing",
       source: new VectorSource({
         features: new GeoJSON().readFeatures(dataInput),
@@ -92,12 +133,44 @@ const Peta = ({ zoom =16, dataInput = false}) => {
       }),
     })
     map.addLayer(geojsonData)
+  }, [dataInput])
+  
+  useEffect(() => {
+    if (!map) return;
+      const viewResolution = /** @type {number} */ (view.getResolution());
+      const url = sourceWMS.getFeatureInfoUrl(
+        clickCoordinate,
+        viewResolution,
+        'EPSG:4326',
+        {'INFO_FORMAT': 'application/json'}
+      );
+     
+      if (url) {
+        fetch(url)
+          .then((response) => response.json())
+          .then((res) => {
+            console.log(res)
+            if(res["features"].length == 0) return
+            setDataInput(res["features"][0]["geometry"])
+            setInformasiPersil(res["features"][0]["properties"])
+          })
+          .catch((err)=>{
+            console.log(err)
+          });
+      }
+  }, [clickCoordinate])
+  
+
+  var GetFeatureInfo = () => {
+    if (!map) return;
+    map.on('singleclick', function (evt) {
+      setClickCoordinate(evt.coordinate)
+    })
   }
 
   return (
-      <div ref={mapRef} className="h-screen w-screen ol-map">
-        <ClickTes/>
-        <GeojsonInput/>
+      <div ref={mapRef} className="h-screen w-screen fixed ol-map">
+        <GetFeatureInfo/>
       </div>
   )
 }
