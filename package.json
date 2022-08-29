@@ -12,13 +12,14 @@
     "@elastic/elasticsearch": "^8.2.1",
     "mongoosastic": "^5.0.0",
     "mongoose": "^6.5.2",
-    "next": "12.2.4",
+    "next": "^12.2.4",
     "ol": "^6.15.1",
     "react": "18.2.0",
     "react-autosuggest": "^10.1.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
-    "react-responsive": "^9.0.0-beta.10"
+    "react-responsive": "^9.0.0-beta.10",
+    "sharp": "^0.30.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.8",

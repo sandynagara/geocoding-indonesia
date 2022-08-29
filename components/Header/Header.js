@@ -1,15 +1,15 @@
 import React from 'react'
 import Image from 'next/image'
-import logoUGM from "../images/logoUGM.png"
-import logoLPDP from "../images/logoLPDP.png"
-import logoBIG from "../images/logoBIG.png"
+import logoUGM from "../../public/images/logoUGM.png" 
+import logoLPDP from "../../public/images/logoLPDP.png"
+import logoBIG from "../../public/images/logoBIG.png"
 import useResponsive from '../utils/useResponsice'
 
 function Header() {
   const { isTablet } = useResponsive();
 
   return (
-    <div className='px-5 py-3 flex  font-medium text-white bg-primary items-center'>
+    <div className='px-5 py-3 flex font-medium text-white bg-primary items-center'>
         <div className="flex">
           <div className='mx-1'>
             <Image src={logoLPDP} width={50} height={50}/>

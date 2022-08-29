@@ -15,7 +15,7 @@ function Informasi({menuSelect,informasiPersil}) {
     }
     
   return (
-    <div className=' ml-[90px] px-2 w-[250px] z-10 h-screen fixed bg-white overflow-scroll sidebar py-1 duration-500' style={menuSelect == "Informasi" ? {marginLeft:"88px"}:{marginLeft:"-400px"}}>
+    <div className=' ml-[90px] px-2 w-[250px] z-10 h-[calc(100vh_+_81px)] fixed bg-white overflow-y-scroll sidebar py-1 duration-500' style={menuSelect == "Informasi" ? {marginLeft:"88px"}:{marginLeft:"-400px"}}>
         {informasiPersil ? <div>
             <ItemInformasi judul='Alamat' isi={informasiPersil["Alamat"]}/>
             <ItemInformasi judul='Kode Pos' isi={informasiPersil["KODE_POS"]}/>

@@ -8,8 +8,7 @@ import GeoJSON from "ol/format/GeoJSON"
 import TileWMS from 'ol/source/TileWMS';
 import { Fill, Stroke, Style} from 'ol/style';
 
-
-const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDataInput,setMenuSelect,setInformasiPersil}) => {
+const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setDataInput,setMenuSelect,setInformasiPersil}) => {
   const mapRef = useRef();
   const [map, setMap] = useState(null);
   const [clickCoordinate, setClickCoordinate] = useState();
@@ -35,12 +34,23 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
   // on component mount
   useEffect(() => {
     let options = {
-      view: view,
-      layers: [basemapLayer,
-        new OLTileLayer({
-        zIndex:100,
-        source: sourceWMS,
-      }),]
+      view: new ol.View({ zoom, center,projection: "EPSG:4326" }),
+      layers: [new OLTileLayer({
+        source: new XYZ({
+          //url: 'http://mt1.google.com/vt/lyrs=s&hl=pl&&x={x}&y={y}&z={z}'
+          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+        })
+      }),new OLTileLayer({
+        source: new TileWMS({
+          url: 'https://ppids-ugm.com/geoserver/wms',
+          params: {'LAYERS': 'geocoding:semarang', 'TILED': true},
+          serverType: 'geoserver',
+          // Countries have transparency, so do not fade tiles:
+          transition: 0,
+        }),
+      }),],
+      controls: [],
+      overlays: []
     };
     let mapObject = new ol.Map(options);
     mapObject.setTarget(mapRef.current);
@@ -53,7 +63,7 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
     if(menuSelect["nama"] == "Reset View"){
       setMenuSelect({nama:"reset",lebarSidebar:0})
       map.getView().setCenter(center)
-      map.getView().setZoom(19);
+      map.getView().setZoom(13);
       setInformasiPersil(false)
       setValue("")
       setDataInput(false)
@@ -159,7 +169,7 @@ const Peta = ({ zoom =19, dataInput = false,basemapUrl,menuSelect,setValue,setDa
   }
 
   return (
-      <div ref={mapRef} className="h-screen w-screen fixed ol-map">
+      <div ref={mapRef} className="h-full w-screen flex flex-grow relative ol-map">
         <GetFeatureInfo/>
       </div>
   )
