@@ -1,46 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-// import OpenStreetMap from '../../public/images/Basemap/OpenStreetMap.jpg'
-// import EsriWorldImagery from '../../public/images/Basemap/EsriWorldImagenery.jpg'
-// import EsriToPo from '../../public/images/Basemap/EsriToPo.jpg'
-// import StadiaDark from '../../public/images/Basemap/StadiaDark.jpg'
-// import GoogleMaps from '../../public/images/Basemap/GoogleMaps.jpg'
-// import GoogleStreet from '../../public/images/Basemap/GoogleStreet.jpg'
 import daftarBasemap from '../Basemaps/BasemapsList';
-import {RiArrowDownSLine} from "react-icons/ri"
-
-// const daftarBasemap = [
-//     {
-//       url: "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
-//       nama: "Google Satelite",
-//       gambar: '/images/Basemap/GoogleMaps.jpg',
-//     },
-//     {
-//       url: "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}",
-//       nama: "Google Streets",
-//       gambar: '/images/Basemap/GoogleMaps.jpg',
-//     },
-//     {
-//       url: "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-//       nama: "OpenStreetMap",
-//       gambar: '/images/Basemap/GoogleMaps.jpg',
-//     },
-//     {
-//       url: "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png",
-//       nama: "Stadia.AlidadeSmoothDark",
-//       gambar: '/images/Basemap/GoogleMaps.jpg',
-//     },
-//     {
-//       url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-//       nama: "Esri.WorldImagery",
-//       gambar: '/images/Basemap/GoogleMaps.jpg',
-//     },
-//     {
-//       url: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
-//       nama: "Esri.WorldTopoMap",
-//       gambar: '/images/Basemap/GoogleMaps.jpg',
-//     },
-//   ];
+import {RiArrowDownSLine} from "react-icons/ri";
 
 function BasemapBottom({basemapSelect,setBasemapSelect,menuSelect,setMenuSelect}) {
   return (

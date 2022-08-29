@@ -12,20 +12,20 @@ function Header() {
     <div className='px-5 py-3 flex font-medium text-white bg-primary items-center'>
         <div className="flex">
           <div className='mx-1'>
-            <Image src={logoLPDP} width={50} height={50}/>
+            <Image src={logoLPDP} width={40} height={40}/>
           </div>
           <div className='mx-1'>
-            <Image src={logoUGM} width={50} height={50}/>
+            <Image src={logoUGM} width={40} height={40}/>
           </div>
           <div className='mx-1'>
-            <Image src={logoBIG} width={50} height={50}/>
+            <Image src={logoBIG} width={40} height={40}/>
           </div>
         </div>
         {isTablet ?
           <div className=' ml-4 text-sm'>
             Uji Implementasi SNI 9037:2021 tentang Alamat
           </div> :
-          <div className='text-xl ml-4'>
+          <div className='text-lg ml-4'>
             Uji Implementasi SNI 9037:2021 tentang Alamat
            </div>
         }

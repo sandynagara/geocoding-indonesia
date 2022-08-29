@@ -23,7 +23,6 @@ function InputAlamat({setValue,setDataInput,value}) {
       }
       setLoading(false)
       setSuggestions(res["Data"]["hits"])
-      console.log(res["Data"]["hits"])
   })
     .catch(err=>{
       setLoading(false)
@@ -65,9 +64,9 @@ const inputProps = {
           inputProps={inputProps}
           
       />
-      <div className='pr-2 ml-[-2px] h-[46px] border-primary border-r-[3px] border-y-[3px] bg-white flex items-center justify-center'>  
+      <div className='pr-2 ml-[-2px] h-[40px] border-primary border-r-[3px] border-y-[3px] bg-white flex items-center justify-center'>  
       {loading && <Image src={'/images/loading.svg'} height={25} width={25}/>}
-      {value !== "" ? <AiOutlineClose size={25} color="red" onClick={()=>setValue("")} className="hover:cursor-pointer"/>: <AiOutlineSearch size={25}/>}
+      {value !== "" ? <AiOutlineClose size={20} color="red" onClick={()=>setValue("")} className="hover:cursor-pointer"/>: <AiOutlineSearch size={20}/>}
       
     </div>
   </div>

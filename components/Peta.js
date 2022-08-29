@@ -36,6 +36,7 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
     let options = {
       view: new ol.View({ zoom, center,projection: "EPSG:4326" }),
       layers: [new OLTileLayer({
+        properties:"Basemap",
         source: new XYZ({
           //url: 'http://mt1.google.com/vt/lyrs=s&hl=pl&&x={x}&y={y}&z={z}'
           url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
@@ -87,6 +88,7 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
         map.removeLayer(layer)
       }
     });
+
     var basemapLayer= new OLTileLayer({
       properties:"Basemap",
       source: new XYZ({
@@ -149,7 +151,6 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
         fetch(url)
           .then((response) => response.json())
           .then((res) => {
-            console.log(res)
             if(res["features"].length == 0) return
             setDataInput(res["features"][0]["geometry"])
             setInformasiPersil(res["features"][0]["properties"])

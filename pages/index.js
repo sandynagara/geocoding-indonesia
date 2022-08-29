@@ -80,7 +80,7 @@ export default function Home() {
       </Head>
       <div className="flex flex-col">
         <Header className="absolute" />
-        <div className="flex flex-row h-[calc(100vh_-_81px)]">
+        <div className="flex flex-row h-[calc(100vh_-_80px)]">
           <div>
             {!isTablet && (
               <Sidebar
@@ -106,7 +106,7 @@ export default function Home() {
               <div
                 className="mt-3 px-5 absolute z-10 duration-500"
                 style={{
-                  marginLeft: `calc(${menuSelect["lebarSidebar"]}px + 88px)`,
+                  marginLeft: `calc(${menuSelect["lebarSidebar"]}px + 80px)`,
                 }}
               >
                 <InputAlamat

@@ -15,7 +15,7 @@ function Informasi({menuSelect,informasiPersil}) {
     }
     
   return (
-    <div className=' ml-[90px] px-2 w-[250px] z-10 h-[calc(100vh_+_81px)] fixed bg-white overflow-y-scroll sidebar py-1 duration-500' style={menuSelect == "Informasi" ? {marginLeft:"88px"}:{marginLeft:"-400px"}}>
+    <div className=' ml-[80px] px-2 w-[230px] z-10 h-[calc(100vh_+_81px)] fixed bg-white overflow-y-scroll sidebar py-1 duration-500' style={menuSelect == "Informasi" ? {marginLeft:"80px"}:{marginLeft:"-400px"}}>
         {informasiPersil ? <div>
             <ItemInformasi judul='Alamat' isi={informasiPersil["Alamat"]}/>
             <ItemInformasi judul='Kode Pos' isi={informasiPersil["KODE_POS"]}/>
@@ -25,7 +25,7 @@ function Informasi({menuSelect,informasiPersil}) {
         </div>
        
         : 
-        <div className='w-full h-full font-semibold flex justify-center items-center'>
+        <div className='w-full h-full texl-sm flex justify-center items-center'>
             Belum ada informasi
         </div>
         }
