@@ -13,7 +13,7 @@ function InputAlamat({setValue,setDataInput,value}) {
 
 
   var getDataAlamat = async (newValue) => {
-    var url = `${server}/api/geocoding/${newValue}`
+    var url = `http://localhost:3000/api/geocoding/${newValue}`
     setLoading(true)
     fetch(url,{
         method:"GET",

@@ -19,10 +19,7 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
       url: basemapUrl
     })
   })
-
   var center = [110.41019027614477, -6.991410100761829]
-
-  const view = new ol.View({ zoom, center,projection: "EPSG:4326" })
 
   const sourceWMS = new TileWMS({
     url: 'https://ppids-ugm.com/geoserver/wms',
@@ -42,9 +39,10 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
           url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
         })
       }),new OLTileLayer({
+        zIndex:99,
         source: new TileWMS({
           url: 'https://ppids-ugm.com/geoserver/wms',
-          params: {'LAYERS': 'geocoding:semarang', 'TILED': true},
+          params: {'LAYERS': 'geocoding:semarang', 'TILED': true,'CRS':4326},
           serverType: 'geoserver',
           // Countries have transparency, so do not fade tiles:
           transition: 0,
@@ -81,7 +79,7 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
   }, [menuSelect]);
 
   useEffect(() => {
-    console.log(basemapUrl)
+  
     if (!map) return;
     map.getLayers().forEach(layer => {
       if (layer && layer.values_.properties == 'Basemap' ){
@@ -139,6 +137,8 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
   
   useEffect(() => {
     if (!map) return;
+      const zoomWMS = 20
+      const view = new ol.View({ zoomWMS, center,projection: "EPSG:4326" })
       const viewResolution = /** @type {number} */ (view.getResolution());
       const url = sourceWMS.getFeatureInfoUrl(
         clickCoordinate,
@@ -146,7 +146,7 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
         'EPSG:4326',
         {'INFO_FORMAT': 'application/json'}
       );
-     
+      
       if (url) {
         fetch(url)
           .then((response) => response.json())
