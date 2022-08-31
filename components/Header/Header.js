@@ -1,9 +1,11 @@
 import React from 'react'
 import Image from 'next/image'
-import logoUGM from "../../public/images/logoUGM.png" 
-import logoLPDP from "../../public/images/logoLPDP.png"
-import logoBIG from "../../public/images/logoBIG.png"
 import useResponsive from '../utils/useResponsice'
+
+
+const logoUGM = "/images/logoUGM.png" 
+const logoLPDP = "/images/logoLPDP.png"
+const logoBIG = "/images/logoBIG.png"
 
 function Header() {
   const { isTablet } = useResponsive();

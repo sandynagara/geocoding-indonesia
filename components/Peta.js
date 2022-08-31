@@ -46,6 +46,7 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
           url: 'https://ppids-ugm.com/geoserver/wms',
           params: {'LAYERS': 'geocoding:semarang', 'TILED': true},
           serverType: 'geoserver',
+          zIndex: 8,
           // Countries have transparency, so do not fade tiles:
           transition: 0,
         }),

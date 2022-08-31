@@ -75,7 +75,7 @@ export default function Home() {
     <div>
       <Head>
         <title>Uji Implementasi SNI 9037:2021 tentang Alamat</title>
-        <link rel="shortcut icon" href={"/ugm_favicon.png"} />
+        <link rel="shortcut icon" href={"/geocoder2/ugm_favicon.png"} />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <div className="flex flex-col">

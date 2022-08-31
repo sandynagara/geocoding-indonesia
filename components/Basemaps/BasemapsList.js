@@ -1,10 +1,11 @@
-import OpenStreetMap from '../../public/images/Basemap/OpenStreetMap.jpg'
-import EsriWorldImagery from '../../public/images/Basemap/EsriWorldImagenery.jpg'
-import EsriToPo from '../../public/images/Basemap/EsriToPo.jpg'
-import StadiaDark from '../../public/images/Basemap/StadiaDark.jpg'
-import GoogleMaps from '../../public/images/Basemap/GoogleMaps.jpg'
-import GoogleStreet from '../../public/images/Basemap/GoogleStreet.jpg'
-import CartoDb from '../../public/images/Basemap/CartoDb.jpg'
+
+const OpenStreetMap = '/images/Basemap/OpenStreetMap.jpg'
+const EsriWorldImagery = '/images/Basemap/EsriWorldImagenery.jpg'
+const EsriToPo = '/images/Basemap/EsriToPo.jpg'
+const StadiaDark = '/images/Basemap/StadiaDark.jpg'
+const GoogleMaps = '/images/Basemap/GoogleMaps.jpg'
+const GoogleStreet = '/images/Basemap/GoogleStreet.jpg'
+const CartoDb = '/images/Basemap/CartoDb.jpg'
 
 const daftarBasemap = [
     {
