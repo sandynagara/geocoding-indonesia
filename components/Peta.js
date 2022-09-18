@@ -19,7 +19,7 @@ const Peta = ({zoom=16, dataInput = false,basemapUrl,menuSelect,setValue,setData
       url: basemapUrl
     })
   })
-  var center = [106.825030,-6.163826]
+  var center = [110.377832,-7.770439]
 
   const sourceWMS = new TileWMS({
     url: 'https://ppids-ugm.com/geoserver/wms',
