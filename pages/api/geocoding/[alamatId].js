@@ -11,8 +11,7 @@ export default async function data(req, res) {
     })
   
     const result= await client.search({
-      index: ['geocode_semarang','geocode_kebonkelapa'],
-      size:5,
+      index: ['geocode_kebonkelapa','geocode_semarang'],
       query: {
         match: { 
           ALAMAT: {

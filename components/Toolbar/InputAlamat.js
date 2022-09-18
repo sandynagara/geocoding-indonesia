@@ -63,7 +63,8 @@ const inputProps = {
           getSuggestionValue={getSuggestionValue}
           renderSuggestion={renderSuggestion}
           inputProps={inputProps}
-          
+          alwaysRenderSuggestions={true}
+          id="scrollable-container-example"
       />
       <div className='pr-2 ml-[-2px] h-[40px] border-primary border-r-[3px] border-y-[3px] bg-white flex items-center justify-center'>  
       {loading && <Image src={'/images/loading.svg'} height={25} width={25}/>}

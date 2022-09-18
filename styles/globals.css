@@ -55,8 +55,9 @@ body {
 .react-autosuggest__suggestions-container--open {
   display: block;
   position: absolute;
-  
-  width: 433px;
+  height: 300px;
+  overflow-y: scroll;
+  width: 429px;
   border: 1px solid #aaa;
   background-color: #fff;
   font-family: Helvetica, sans-serif;
@@ -83,22 +84,22 @@ body {
 }
 
 
-.sidebar::-webkit-scrollbar,.isi-laporan::-webkit-scrollbar {
+.sidebar::-webkit-scrollbar,.react-autosuggest__suggestions-container--open::-webkit-scrollbar,.isi-laporan::-webkit-scrollbar {
   width: 7px;
 }
 
 /* Track */
-.sidebar::-webkit-scrollbar-track,.isi-laporan::-webkit-scrollbar-track{
+.sidebar::-webkit-scrollbar-track,.isi-laporan::-webkit-scrollbar-track,.react-autosuggest__suggestions-container--open::-webkit-scrollbar-track{
   background: #bdbdbd;
 }
 
 /* Handle */
-.sidebar::-webkit-scrollbar-thumb,.isi-laporan::-webkit-scrollbar-thumb {
+.sidebar::-webkit-scrollbar-thumb,.isi-laporan::-webkit-scrollbar-thumb,.react-autosuggest__suggestions-container--open::-webkit-scrollbar-thumb {
   background: #005f96;
 }
 
 /* Handle on hover */
-.sidebar::-webkit-scrollbar-thumb:hover,.isi-laporan::-webkit-scrollbar-thumb:hover{
+.sidebar::-webkit-scrollbar-thumb:hover,.isi-laporan::-webkit-scrollbar-thumb:hover,.react-autosuggest__suggestions-container--open::-webkit-scrollbar-thumb:hover{
   background: #004A74;
 }
 
