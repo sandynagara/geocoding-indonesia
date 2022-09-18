@@ -13,15 +13,14 @@ function Informasi({menuSelect,informasiPersil}) {
         </div>
         </div> 
     }
-    
+    console.log(informasiPersil)
   return (
     <div className=' ml-[80px] px-2 w-[230px] z-10 h-[calc(100vh_+_81px)] fixed bg-white overflow-y-scroll sidebar py-1 duration-500' style={menuSelect == "Informasi" ? {marginLeft:"80px"}:{marginLeft:"-400px"}}>
         {informasiPersil ? <div>
-            <ItemInformasi judul='Alamat' isi={informasiPersil["Alamat"]}/>
+            {informasiPersil["ALAMAT"] ?   <ItemInformasi judul='Alamat' isi={informasiPersil["ALAMAT"]}/> : <ItemInformasi judul='Alamat' isi={informasiPersil["Alamat"]}/>}
             <ItemInformasi judul='Kode Pos' isi={informasiPersil["KODE_POS"]}/>
             <ItemInformasi judul='Kecamatan' isi={informasiPersil["KECAMATAN"]}/>
             <ItemInformasi judul='Kelurahan' isi={informasiPersil["KELURAHAN"]}/>
-            <ItemInformasi judul='Provinsi' isi={informasiPersil["PROVINSI"]}/>
         </div>
        
         : 

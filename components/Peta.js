@@ -8,7 +8,7 @@ import GeoJSON from "ol/format/GeoJSON"
 import TileWMS from 'ol/source/TileWMS';
 import { Fill, Stroke, Style} from 'ol/style';
 
-const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setDataInput,setMenuSelect,setInformasiPersil}) => {
+const Peta = ({zoom=16, dataInput = false,basemapUrl,menuSelect,setValue,setDataInput,setMenuSelect,setInformasiPersil}) => {
   const mapRef = useRef();
   const [map, setMap] = useState(null);
   const [clickCoordinate, setClickCoordinate] = useState();
@@ -19,14 +19,11 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
       url: basemapUrl
     })
   })
-
-  var center = [110.41019027614477, -6.991410100761829]
-
-  const view = new ol.View({ zoom, center,projection: "EPSG:4326" })
+  var center = [106.825030,-6.163826]
 
   const sourceWMS = new TileWMS({
     url: 'https://ppids-ugm.com/geoserver/wms',
-    params: {'LAYERS': 'geocoding:semarang', 'TILED': true},
+    params: {'LAYERS': 'geocoding', 'TILED': true},
     serverType: 'geoserver',
     // Countries have transparency, so do not fade tiles:
     transition: 0,
@@ -39,12 +36,13 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
         properties:"Basemap",
         source: new XYZ({
           //url: 'http://mt1.google.com/vt/lyrs=s&hl=pl&&x={x}&y={y}&z={z}'
-          url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+          url: 'https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         })
       }),new OLTileLayer({
+        zIndex:99,
         source: new TileWMS({
           url: 'https://ppids-ugm.com/geoserver/wms',
-          params: {'LAYERS': 'geocoding:semarang', 'TILED': true},
+          params: {'LAYERS': 'geocoding', 'TILED': true,'CRS':4326},
           serverType: 'geoserver',
           zIndex: 8,
           // Countries have transparency, so do not fade tiles:
@@ -65,7 +63,7 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
     if(menuSelect["nama"] == "Reset View"){
       setMenuSelect({nama:"reset",lebarSidebar:0})
       map.getView().setCenter(center)
-      map.getView().setZoom(13);
+      map.getView().setZoom(16);
       setInformasiPersil(false)
       setValue("")
       setDataInput(false)
@@ -82,7 +80,7 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
   }, [menuSelect]);
 
   useEffect(() => {
-    console.log(basemapUrl)
+  
     if (!map) return;
     map.getLayers().forEach(layer => {
       if (layer && layer.values_.properties == 'Basemap' ){
@@ -114,8 +112,8 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
     }
    
 
-    if(dataInput["type"]=="Polygon"){
-      map.getView().setCenter(dataInput["coordinates"][0][0])
+    if(dataInput["zoom"]){
+      map.getView().setCenter(dataInput["geometry"]["coordinates"][0][0][0])
       map.getView().setZoom(19);
     }
 
@@ -123,7 +121,7 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
       zIndex:99,
       title:"testing",
       source: new VectorSource({
-        features: new GeoJSON().readFeatures(dataInput),
+        features: new GeoJSON().readFeatures(dataInput["geometry"]),
       }),
       style:new Style({
         stroke: new Stroke({
@@ -140,6 +138,8 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
   
   useEffect(() => {
     if (!map) return;
+      const zoomWMS = 20
+      const view = new ol.View({ zoomWMS, center,projection: "EPSG:4326" })
       const viewResolution = /** @type {number} */ (view.getResolution());
       const url = sourceWMS.getFeatureInfoUrl(
         clickCoordinate,
@@ -147,13 +147,13 @@ const Peta = ({zoom=13, dataInput = false,basemapUrl,menuSelect,setValue,setData
         'EPSG:4326',
         {'INFO_FORMAT': 'application/json'}
       );
-     
+      
       if (url) {
         fetch(url)
           .then((response) => response.json())
           .then((res) => {
             if(res["features"].length == 0) return
-            setDataInput(res["features"][0]["geometry"])
+            setDataInput({geometry:res["features"][0]["geometry"],zoom:false})
             setInformasiPersil(res["features"][0]["properties"])
           })
           .catch((err)=>{

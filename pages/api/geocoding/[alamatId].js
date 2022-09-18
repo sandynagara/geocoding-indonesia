@@ -21,7 +21,6 @@ export default async function data(req, res) {
         }}
       }
     })
-  
     res.status(200).json({Hasil:true,Data:result["hits"]})
   }catch(e){
     res.status(500).json({Hasil:false,Data:"Data gagal ditemukan"})

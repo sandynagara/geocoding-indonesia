@@ -24,50 +24,11 @@ export default function Home() {
   const [informasiPersil, setInformasiPersil] = useState(false);
   const [menuSelect, setMenuSelect] = useState({
     nama: "Home",
-    lebarSidebar: 250,
+    lebarSidebar: 220,
   });
   const [basemapSelect, setBasemapSelect] = useState(
-    "https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+    "https://{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   );
-
-  var getDataAlamat = async (newValue) => {
-    var url = `${server}/api/geocoding/${newValue}`;
-    fetch(url, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res["Hasil"]) {
-          return;
-        }
-        setSuggestions(res["Data"]["hits"]);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  var onSuggestionsFetchRequested = (e) => {
-    getDataAlamat(e.value);
-  };
-  var onSuggestionsClearRequested = (e) => {
-    setSuggestions([]);
-  };
-  var getSuggestionValue = (e) => {
-    setDataInput(e._source.geometry);
-    return e._source.ALAMAT;
-  };
-  var renderSuggestion = (e) => {
-    return <div className="text-sm">{e._source.ALAMAT}</div>;
-  };
-
-  var onChange = (event, { newValue, method }) => {
-    setValue(newValue);
-  };
-
-  const inputProps = {
-    placeholder: "Cari Alamat",
-    value,
-    onChange: onChange,
-  };
 
   const { isTablet } = useResponsive();
 

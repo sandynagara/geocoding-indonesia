@@ -13,7 +13,7 @@ function InputAlamat({setValue,setDataInput,value}) {
 
 
   var getDataAlamat = async (newValue) => {
-    var url = `${server}/api/geocoding/${newValue}`
+    var url = `https://ppids-ugm.com/geocoder2/api/geocoding/${newValue}`
     setLoading(true)
     fetch(url,{
         method:"GET",
@@ -21,6 +21,7 @@ function InputAlamat({setValue,setDataInput,value}) {
       if(!res["Hasil"]){
           return
       }
+      console.log(res["Data"]["hits"])
       setLoading(false)
       setSuggestions(res["Data"]["hits"])
   })
@@ -37,7 +38,7 @@ var onSuggestionsClearRequested = (e) => {
     setSuggestions([])
 }
 var getSuggestionValue = (e) => {
-    setDataInput(e._source.geometry)
+    setDataInput({geometry:e._source.geometry,zoom:true})
     return e._source.ALAMAT;
 }
 var renderSuggestion = (e) => {
