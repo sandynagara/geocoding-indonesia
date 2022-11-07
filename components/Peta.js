@@ -170,9 +170,9 @@ const Peta = ({zoom=16, dataInput = false,basemapUrl,menuSelect,setValue,setData
   }
 
   return (
-      <div ref={mapRef} className="h-full w-screen flex flex-grow relative ol-map">
-        <GetFeatureInfo/>
-      </div>
+    <div ref={mapRef} className="h-full w-screen flex flex-grow relative ol-map">
+      <GetFeatureInfo/>
+    </div>
   )
 }
 

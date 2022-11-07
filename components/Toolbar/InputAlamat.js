@@ -21,7 +21,6 @@ function InputAlamat({setValue,setDataInput,value}) {
       if(!res["Hasil"]){
           return
       }
-      console.log(res["Data"]["hits"])
       setLoading(false)
       setSuggestions(res["Data"]["hits"])
   })
@@ -39,10 +38,10 @@ var onSuggestionsClearRequested = (e) => {
 }
 var getSuggestionValue = (e) => {
     setDataInput({geometry:e._source.geometry,zoom:true})
-    return e._source.ALAMAT;
+    return e._source.alamat;
 }
 var renderSuggestion = (e) => {
-    return <div className='text-sm'>{e._source.ALAMAT}</div>
+    return <div className='text-sm'>{e._source.alamat}</div>
 }
 
 var onChange = (event, { newValue, method }) => {
